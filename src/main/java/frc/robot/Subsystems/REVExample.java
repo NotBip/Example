@@ -1,5 +1,7 @@
 package frc.robot.Subsystems;
 
+import java.util.function.Supplier;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
@@ -18,6 +20,7 @@ public class REVExample extends SubsystemBase {
 
     // Initializing the motors. 
     private SparkMax motor1 = new SparkMax(1, MotorType.kBrushless);  
+    
 
     // Initalizing motor configs
     private SparkMaxConfig motor1Config = new SparkMaxConfig(); 
@@ -48,26 +51,24 @@ public class REVExample extends SubsystemBase {
         // this.setDefaultCommand(stopAllMotors());
     }
 
-    public void spinMotor1(double speed) { 
-        SmartDashboard.putNumber("Motor 1 Speed", speed); 
-        motor1.set(speed);
+    public Command spinMotor1(Supplier<Double> speed) { 
+        // SmartDashboard.putNumber("Motor 1 Speed", speed.get()); 
+        return run(() -> motor1.set(speed.get())); 
     }
 
     public Command setPositionMotor1(double position) { 
         return run(() -> motor1Controller.setReference(position, ControlType.kPosition)); 
-         
     }
 
 
-    public void stopMotor1() { 
-        motor1.set(0);
-        SmartDashboard.putNumber("Motor 1 Speed", 0); 
+    public Command stopMotor1() { 
+        // SmartDashboard.putNumber("Motor 1 Speed", 0); 
+        return runOnce(() -> motor1.set(0)); 
     }
 
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Motor 1 Speed", motor1.get()); 
-
         SmartDashboard.putNumber("Motor 1 Encoder", motor1Encoder.getPosition()); 
     }
 

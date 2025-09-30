@@ -29,8 +29,8 @@ public class RobotContainer {
     controller
     .axisGreaterThan(3, .1) // making sure trigger value greater than .1 before going any further (DEADBAND)
       .whileTrue( // while the trigger is pressed
-        new InstantCommand(() -> revExample.spinMotor1(controller.getRightTriggerAxis())) // run this command while getting the value of the trigger
-        ).onFalse(new InstantCommand( () -> revExample.stopMotor1())); 
+        revExample.spinMotor1(() -> controller.getRightTriggerAxis())) // run this command while getting the value of the trigger
+        .onFalse(revExample.stopMotor1()); 
     
     controller.b().whileTrue(revExample.setPositionMotor1(60));
     

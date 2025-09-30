@@ -32,12 +32,10 @@ public class RobotContainer {
         new InstantCommand(() -> revExample.spinMotor1(controller.getRightTriggerAxis())) // run this command while getting the value of the trigger
         ).onFalse(new InstantCommand( () -> revExample.stopMotor1())); 
     
-    controller
-      .axisGreaterThan(2, .1)
-        .whileTrue(
-          new InstantCommand(() -> revExample.spinMotor2(controller.getLeftTriggerAxis()))
-          ).onFalse(new InstantCommand( () -> revExample.stopMotor2())); 
-        }
+    controller.b().whileTrue(revExample.setPositionMotor1(60));
+    
+  }
+
 
   public Command getAutonomousCommand() {
     return null;
